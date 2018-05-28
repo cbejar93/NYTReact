@@ -1,16 +1,36 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import API from "./utils/API";
+import Input from "./components/Input"
+import Button from "./components/Button"
 
 class App extends Component {
-  
+  state = {
+    articles: [],
+    query: "",
+    bdate: "",
+    edate: ""
+  }
+
   componentDidMount () {
-      this.loadArticles();
+      // this.loadArticles();
+  }
+
+  handleFormSubmit= event => {
+      event.preventDefault();
+      this.loadArticles(this.state.query, this.state.bdate, this.state.edate);
+  }
+
+  handleInputChange = event => {
+      console.log(event.target)
+      const { name, value } = event.target;
+      this.setState({
+        [name]: value
+      });
   }
 
   loadArticles = () => {
-    API.getArticles()
+    API.getArticles(this.state.query, this.state.bdate, this.state.edate)
       .then( res => console.log(res.data))
       .catch(err => console.log(err));
   }
@@ -18,13 +38,32 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <div className="container">
+          <Input
+          name="topicsearch"
+          value={this.state.query}
+          onChange={this.handleInputChange}
+          placeholder= "Search a Topic"
+          />
+          <Input
+          name="Startdate"
+          value={this.state.bdate}
+          onChange={this.handleInputChange}
+          placeholder="YYYY/MM/DD Start"
+          />
+          <Input
+          name="Enddate"
+          value={this.state.edate}
+          onChange={this.handleInputChange}
+          placeholder="YYYY/MM/DD End"
+          />
+          <Button 
+          onClick={this.handleFormSubmit}
+          type="success"
+          className="input-lg"
+          > Search!
+          </Button>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
     );
   }
