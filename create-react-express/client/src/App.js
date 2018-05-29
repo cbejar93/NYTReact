@@ -19,14 +19,17 @@ class App extends Component {
   handleFormSubmit= event => {
       event.preventDefault();
       this.loadArticles(this.state.query, this.state.bdate, this.state.edate);
+      this.setState({query: ""});
+      this.setState({bdate: ""});
+      this.setState({edate: ""});
   }
 
-  handleInputChange = event => {
-      console.log(event.target)
-      const { name, value } = event.target;
-      this.setState({
-        [name]: value
-      });
+  handleChange = event => {
+      console.log(event.target);
+      this.setState({query: event.target.query});
+      this.setState({bdate: event.target.bdate});
+      this.setState({edate: event.target.edate});
+      console.log(this.state.edate);
   }
 
   loadArticles = () => {
@@ -39,30 +42,35 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <Input
-          name="topicsearch"
-          value={this.state.query}
-          onChange={this.handleInputChange}
-          placeholder= "Search a Topic"
-          />
-          <Input
-          name="Startdate"
-          value={this.state.bdate}
-          onChange={this.handleInputChange}
-          placeholder="YYYY/MM/DD Start"
-          />
-          <Input
-          name="Enddate"
-          value={this.state.edate}
-          onChange={this.handleInputChange}
-          placeholder="YYYY/MM/DD End"
-          />
-          <Button 
-          onClick={this.handleFormSubmit}
-          type="success"
-          className="input-lg"
-          > Search!
-          </Button>
+          <form onSubmit = {this.handleFormSubmit}>
+            <Input
+            name="topicsearch"
+            type="text"
+            value={this.state.query}
+            onChange={this.handleChange}
+            placeholder= "Search a Topic"
+            />
+            <Input
+            name="Startdate"
+            type= "text"
+            value={this.state.bdate}
+            onChange={this.handleChange}
+            placeholder="YYYY/MM/DD Start"
+            />
+            <Input
+            name="Enddate"
+            value={this.state.edate}
+            type= "text"
+            onChange={this.handleChange}
+            placeholder="YYYY/MM/DD End"
+            />
+            <Button 
+            type="success"
+            type="submit"
+            className="input-lg"
+            > Search!
+            </Button>
+          </form>
         </div>
       </div>
     );
