@@ -4,6 +4,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const routes = require("./routes");
+
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
@@ -15,6 +17,7 @@ app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlelist");
 
+app.use(routes);
 
 // Send every request to the React app
 // Define any API routes before this runs
