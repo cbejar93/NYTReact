@@ -20,6 +20,25 @@ class App extends Component {
       // this.loadArticles();
   }
 
+  saveArticle= (event)=> {
+    event.preventDefault();
+    console.log(event.target.value);
+    let i = event.target.value;
+    this.hellothere(i);
+  }
+
+  hellothere= (x) => {
+    // console.log(this.state.articles[x]);
+    console.log(x);
+    let saveNews = this.state.articles[x];
+    let title = saveNews.headline.main;
+    let snippet = saveNews.snippet;
+    let url = saveNews.web_url;
+    let bodyreq = {title: title, snippet: snippet, url:url};
+    console.log(bodyreq);
+    API.createAricles(bodyreq);
+  }
+
   handleFormSubmit= event => {
       event.preventDefault();
       this.setState({[event.target.name]: [event.target.value]});
@@ -59,6 +78,7 @@ class App extends Component {
           
             <ArticleCard
                articles = {this.state.articles}
+               saveArticle = {this.saveArticle}
             />                
          
         </div>

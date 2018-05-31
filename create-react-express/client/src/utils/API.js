@@ -7,5 +7,9 @@ export default {
 
     getArticles: function (q, bdate, edate) {
         return axios.get(`${this.nytUrl}?q=${q}?begin_date=${bdate}?end_date=${edate}&api_key=${this.nytAPIkey}`)
+    },
+
+    createAricles: function(articleData){
+        return axios.post("/api/articles", articleData);
     }
 } 
