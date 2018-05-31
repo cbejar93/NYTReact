@@ -3,6 +3,7 @@ import "./App.css";
 import API from "./utils/API";
 import Input from "./components/Input";
 import ArticleCard from "./components/ArticleCard";
+import SavedCard from "./components/SavedCard";
 
 class App extends Component {
   constructor () {
@@ -26,6 +27,18 @@ class App extends Component {
     console.log(event.target.value);
     let i = event.target.value;
     this.hellothere(i);
+  }
+
+  removeArticle = (event) => {
+    event.preventDefault();
+    console.log(event.target.value);
+    let id = event.target.value;
+    this.helloagain(id)
+  }
+
+  helloagain = (x) => {
+    console.log(x);
+    API.deleteArticle(x);
   }
 
   hellothere= (x) => {
@@ -89,7 +102,12 @@ class App extends Component {
             <ArticleCard
                articles = {this.state.articles}
                saveArticle = {this.saveArticle}
-            />                
+            /> 
+
+            <SavedCard 
+              savedArticles = {this.state.savedArticles}
+              removeArticle = {this.removeArticle}
+            />
          
         </div>
       </div>
