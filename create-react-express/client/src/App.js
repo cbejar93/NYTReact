@@ -9,6 +9,7 @@ class App extends Component {
     super();
     this.state = {
       articles: [],
+      savedArticles: [],
       query: "",
       bdate: "",
       edate: ""
@@ -17,7 +18,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-      // this.loadArticles();
+    this.databaseArticles();
   }
 
   saveArticle= (event)=> {
@@ -36,7 +37,16 @@ class App extends Component {
     let url = saveNews.web_url;
     let bodyreq = {title: title, snippet: snippet, url:url};
     console.log(bodyreq);
-    API.createAricles(bodyreq);
+    API.createArticles(bodyreq);
+  }
+
+  databaseArticles = () => {
+    API.getSavedArticles()
+    .then(res =>{
+    this.setState({savedArticles: res.data})
+    console.log(this.state.savedArticles);
+    })
+    .catch(err =>{console.log(err)})
   }
 
   handleFormSubmit= event => {

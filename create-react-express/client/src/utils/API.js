@@ -9,7 +9,10 @@ export default {
         return axios.get(`${this.nytUrl}?q=${q}?begin_date=${bdate}?end_date=${edate}&api_key=${this.nytAPIkey}`)
     },
 
-    createAricles: function(articleData){
+    createArticles: function(articleData){
         return axios.post("/api/articles", articleData);
+    },
+    getSavedArticles: function (){
+        return axios.get("api/articles")
     }
 } 
